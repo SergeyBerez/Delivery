@@ -20,7 +20,7 @@ const menu = document.querySelector(".menu");
 const logo = document.querySelector(".logo");
 const cardsMenu = document.querySelector(".cards-menu");
 
-let login = localStorage.getItem("gloDelivery");
+let LOGIN = localStorage.getItem("gloDelivery");
 
 function toggleModal() {
   modal.classList.toggle("is-open");
@@ -35,7 +35,7 @@ function toogleModalAuth() {
 function authorized() {
   console.log("autirization");
   function logOut() {
-    login = null;
+    LOGIN = null;
     localStorage.removeItem("gloDelivery");
     buttonAuth.style.display = "";
     userName.style.display = "";
@@ -44,7 +44,7 @@ function authorized() {
     checkAuth();
   }
 
-  userName.textContent = login;
+  userName.textContent = LOGIN;
   buttonAuth.style.display = "none";
   userName.style.display = "inline";
   buttonOut.style.display = "block";
@@ -53,15 +53,14 @@ function authorized() {
 
 //====my function formValidate ======
 
-let error = true;
+let ERROR = true;
 function formValidate(e) {
-  console.log(e.target.value);
   if (e.target.value.length <= 3) {
     labelAuthSpan.style.color = "red";
     labelAuthSpan.textContent = "enter login";
-    error = true;
+    ERROR = true;
   } else {
-    error = false;
+    ERROR = false;
     labelAuthSpan.style.color = "";
     labelAuthSpan.textContent = "login";
   }
@@ -75,12 +74,13 @@ function notAuthorized() {
   function logIn(e) {
     e.preventDefault();
 
-    if (error) {
+    if (ERROR) {
       labelAuthSpan.style.color = "red";
       labelAuthSpan.textContent = "enter login";
     } else {
-      login = loginInput.value;
-      localStorage.setItem("gloDelivery", login);
+      LOGIN = loginInput.value;
+      console.log(LOGIN);
+      localStorage.setItem("gloDelivery", LOGIN);
       toogleModalAuth();
       buttonAuth.removeEventListener("click", toogleModalAuth);
       closeAuth.removeEventListener("click", toogleModalAuth);
@@ -96,7 +96,7 @@ function notAuthorized() {
 }
 //=========end fn  notAuthorized
 function checkAuth() {
-  if (login) {
+  if (LOGIN) {
     authorized();
   } else {
     notAuthorized();
@@ -165,8 +165,14 @@ function createCartGood() {
 function openGoods(e) {
   const target = e.target;
   const restaurant = target.closest(".cards-restaurants");
-  console.log(restaurant);
-  if (restaurant) {
+  // =================home work  auth
+  if (restaurant && !LOGIN) {
+    console.log("notauth");
+    toogleModalAuth();
+  }
+  // ================ eng  =home work  auth
+
+  if (restaurant && LOGIN) {
     containerPromo.classList.add("hide");
     restaurants.classList.add("hide");
     menu.classList.remove("hide");
