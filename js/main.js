@@ -42,6 +42,9 @@ function authorized() {
     buttonOut.style.display = "";
     buttonOut.removeEventListener("click", logOut);
     checkAuth();
+    containerPromo.classList.remove("hide");
+    restaurants.classList.remove("hide");
+    menu.classList.add("hide");
   }
 
   userName.textContent = LOGIN;
@@ -129,6 +132,8 @@ function createCardRestaurant() {
 createCardRestaurant();
 createCardRestaurant();
 createCardRestaurant();
+createCardRestaurant();
+createCardRestaurant();
 
 function createCartGood() {
   const card = document.createElement("section");
@@ -181,6 +186,7 @@ function openGoods(e) {
     createCartGood();
     createCartGood();
     createCartGood();
+   
   }
 }
 
