@@ -140,7 +140,7 @@ function createCardRestaurant(restaurant) {
   } = restaurant;
 
   const card = `
-  	<a class="card card-restaurant" data-name = "${name}"  data-products="${products}">
+  	<a class="card card-restaurant" data-name="${name}"  data-products="${products}">
 						<img src="${image}" alt="image" class="card-image"/>
 						<div class="card-text">
 							<div class="card-heading">
@@ -161,11 +161,10 @@ function createCardRestaurant(restaurant) {
 }
 
 function createCartGood(cards, e) {
-  console.log(e.target);
-
-  console.log(cards);
   const { id, name, description, image, price } = cards;
-  // restaurantTitle.textContent = e.target.dataset.name;
+  const restaurant = e.target.closest(".card-restaurant");
+  restaurantTitle.textContent = restaurant.dataset.name;
+
   const card = document.createElement("section");
   card.className = "card";
   card.insertAdjacentHTML(
@@ -175,12 +174,10 @@ function createCartGood(cards, e) {
 							<div class="card-heading">
 								<h3 class="card-title card-title-reg">${name}</h3>
 							</div>
-						
 							<div class="card-info">
 								<div class="ingredients">${description}</div>
 							</div>
-						
-							<div class="card-buttons">
+						<div class="card-buttons">
 								<button class="button button-primary button-add-cart">
 									<span class="button-card-text">В корзину</span>
 									<span class="button-cart-svg"></span>
@@ -197,7 +194,6 @@ function openGoods(e) {
   const target = e.target;
   if (LOGIN) {
     const restaurant = target.closest(".card-restaurant");
-
     if (restaurant) {
       containerPromo.classList.add("hide");
       restaurants.classList.add("hide");
