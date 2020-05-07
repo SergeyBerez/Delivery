@@ -19,8 +19,24 @@ const restaurants = document.querySelector(".restaurants");
 const menu = document.querySelector(".menu");
 const logo = document.querySelector(".logo");
 const cardsMenu = document.querySelector(".cards-menu");
+const restaurantTitle = document.querySelector(".restaurant-title");
 
 let LOGIN = localStorage.getItem("gloDelivery");
+
+const getData = async function (url) {
+  const response = await fetch(url);
+
+  if (!response.ok) {
+    throw new Error(`error ${url} , status${response.status}`);
+  }
+  const data = await response.json();
+  return data;
+};
+
+const valid = function (str) {
+  const nameReg = /^[a-zA-Z][a-zA-Z0-9-_\.]{3,10}$/;
+  return nameReg.test(str);
+};
 
 function toggleModal() {
   modal.classList.toggle("is-open");
@@ -30,6 +46,13 @@ function toogleModalAuth() {
   modalAuth.classList.toggle("is-open");
   labelAuthSpan.style.color = "";
   labelAuthSpan.textContent = "login";
+}
+
+function returnMain() {
+  containerPromo.classList.remove("hide");
+  restaurants.classList.remove("hide");
+  menu.classList.add("hide");
+  ERROR = true;
 }
 
 function authorized() {
@@ -42,9 +65,8 @@ function authorized() {
     buttonOut.style.display = "";
     buttonOut.removeEventListener("click", logOut);
     checkAuth();
-    containerPromo.classList.remove("hide");
-    restaurants.classList.remove("hide");
-    menu.classList.add("hide");
+    //  when user exit from auth toggle page on home
+    returnMain();
   }
 
   userName.textContent = LOGIN;
@@ -58,14 +80,14 @@ function authorized() {
 
 let ERROR = true;
 function formValidate(e) {
-  if (e.target.value.length <= 3) {
-    labelAuthSpan.style.color = "red";
-    labelAuthSpan.textContent = "enter login";
-    ERROR = true;
-  } else {
+  if (valid(e.target.value)) {
     ERROR = false;
     labelAuthSpan.style.color = "";
     labelAuthSpan.textContent = "login";
+  } else {
+    labelAuthSpan.style.color = "red";
+    labelAuthSpan.textContent = "enter login";
+    ERROR = true;
   }
 }
 //==== end my function ======
@@ -76,13 +98,12 @@ function notAuthorized() {
   loginInput.addEventListener("input", formValidate);
   function logIn(e) {
     e.preventDefault();
-
+    console.log(ERROR);
     if (ERROR) {
       labelAuthSpan.style.color = "red";
       labelAuthSpan.textContent = "enter login";
     } else {
       LOGIN = loginInput.value;
-      console.log(LOGIN);
       localStorage.setItem("gloDelivery", LOGIN);
       toogleModalAuth();
       buttonAuth.removeEventListener("click", toogleModalAuth);
@@ -97,7 +118,7 @@ function notAuthorized() {
   closeAuth.addEventListener("click", toogleModalAuth);
   loginForm.addEventListener("submit", logIn);
 }
-//=========end fn  notAuthorized
+//=========end fn function notAuthorized
 function checkAuth() {
   if (LOGIN) {
     authorized();
@@ -107,96 +128,116 @@ function checkAuth() {
 }
 checkAuth();
 
-function createCardRestaurant() {
+function createCardRestaurant(restaurant) {
+  const {
+    image,
+    kitchen,
+    name,
+    price,
+    stars,
+    products,
+    time_of_delivery: timeOfDelivery,
+  } = restaurant;
+
   const card = `
-  	<a class="card card-restaurant">
-						<img src="img/pizza-plus/preview.jpg" alt="image" class="card-image"/>
+  	<a class="card card-restaurant" data-name = "${name}"  data-products="${products}">
+						<img src="${image}" alt="image" class="card-image"/>
 						<div class="card-text">
 							<div class="card-heading">
-								<h3 class="card-title">Пиццаплюс</h3>
-								<span class="card-tag tag">50 мин</span>
+								<h3 class="card-title">${name}</h3>
+								<span class="card-tag tag">${timeOfDelivery}</span>
 							</div>
-							<!-- /.card-heading -->
-							<div class="card-info">
+						<div class="card-info">
 								<div class="rating">
-									4.5
+								${stars}
 								</div>
-								<div class="price">От 900 ₽</div>
-								<div class="category">Пицца</div>
+								<div class="price">От ${price} ₽</div>
+								<div class="category">${kitchen} </div>
 							</div>
 							</div>
 					</a>
   `;
   cardsRestaurants.insertAdjacentHTML("beforeend", card);
 }
-createCardRestaurant();
-createCardRestaurant();
-createCardRestaurant();
-createCardRestaurant();
-createCardRestaurant();
 
-function createCartGood() {
+function createCartGood(cards, e) {
+  console.log(e.target);
+
+  console.log(cards);
+  const { id, name, description, image, price } = cards;
+  // restaurantTitle.textContent = e.target.dataset.name;
   const card = document.createElement("section");
   card.className = "card";
   card.insertAdjacentHTML(
     "beforeend",
-    ` 
-  		<img src="img/pizza-plus/pizza-hawaiian.jpg" alt="image" class="card-image"/>
+    ` 	<img src=${image} alt="image" class="card-image"/>
 						<div class="card-text">
 							<div class="card-heading">
-								<h3 class="card-title card-title-reg">Пицца Гавайская</h3>
+								<h3 class="card-title card-title-reg">${name}</h3>
 							</div>
-							<!-- /.card-heading -->
+						
 							<div class="card-info">
-								<div class="ingredients">Соус томатный, сыр «Моцарелла», ветчина, ананасы</div>
+								<div class="ingredients">${description}</div>
 							</div>
-							<!-- /.card-info -->
+						
 							<div class="card-buttons">
 								<button class="button button-primary button-add-cart">
 									<span class="button-card-text">В корзину</span>
 									<span class="button-cart-svg"></span>
 								</button>
-								<strong class="card-price-bold">440 ₽</strong>
+								<strong class="card-price-bold">${price}</strong>
 							</div>
 						</div>
-					
-					
-				
-  `
+					`
   );
   cardsMenu.insertAdjacentElement("beforeend", card);
 }
 
 function openGoods(e) {
   const target = e.target;
-  const restaurant = target.closest(".cards-restaurants");
-  // =================home work  auth
-  if (restaurant && !LOGIN) {
-    console.log("notauth");
+  if (LOGIN) {
+    const restaurant = target.closest(".card-restaurant");
+
+    if (restaurant) {
+      containerPromo.classList.add("hide");
+      restaurants.classList.add("hide");
+      menu.classList.remove("hide");
+      cardsMenu.textContent = "";
+      let url = `./db/${restaurant.dataset.products}`;
+      getData(url).then(function (data) {
+        data.forEach((data) => {
+          createCartGood(data, e);
+        });
+      });
+    }
+  } else {
     toogleModalAuth();
-  }
-  // ================ eng  =home work  auth
-
-  if (restaurant && LOGIN) {
-    containerPromo.classList.add("hide");
-    restaurants.classList.add("hide");
-    menu.classList.remove("hide");
-
-    cardsMenu.textContent = "";
-    createCartGood();
-    createCartGood();
-    createCartGood();
-   
   }
 }
 
-cartButton.addEventListener("click", toggleModal);
-close.addEventListener("click", toggleModal);
+function init() {
+  getData("./db/partners.json").then(function (data) {
+    data.forEach(createCardRestaurant);
+  });
 
-document.addEventListener("click", openGoods);
+  cartButton.addEventListener("click", toggleModal);
+  close.addEventListener("click", toggleModal);
 
-logo.addEventListener("click", function (e) {
-  containerPromo.classList.remove("hide");
-  restaurants.classList.remove("hide");
-  menu.classList.add("hide");
-});
+  restaurants.addEventListener("click", openGoods);
+
+  logo.addEventListener("click", function (e) {
+    containerPromo.classList.remove("hide");
+    restaurants.classList.remove("hide");
+    menu.classList.add("hide");
+  });
+
+  let mySwiper = new Swiper(".swiper-container", {
+    speed: 400,
+    spaceBetween: 100,
+    loop: true,
+    autoplay: {
+      delay: 2000,
+    },
+  });
+}
+init();
