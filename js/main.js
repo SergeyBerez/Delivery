@@ -247,11 +247,10 @@ function addToCart(e) {
       localStorage.setItem("cart", JSON.stringify(cart));
     }
   }
-  console.log(cart);
+ 
 }
 function renderCart() {
-  // let card = JSON.parse(localStorage.getItem("cart"));
-  // console.log(card);
+ 
   modalBody.textContent = "";
   cart.forEach(({ id, title, cost, count }) => {
     const itemCart = `	<div class="food-row">
@@ -311,6 +310,7 @@ function init() {
 
   buttonClearCart.addEventListener("click", function (e) {
     cart.length = 0;
+    localStorage.setItem("cart", JSON.stringify(cart));
     renderCart();
   });
 
