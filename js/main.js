@@ -247,11 +247,12 @@ function addToCart(e) {
       localStorage.setItem("cart", JSON.stringify(cart));
     }
   }
- 
 }
 function renderCart() {
- 
   modalBody.textContent = "";
+  cart.sort((a, b) => {
+    return a.cost - b.cost;
+  });
   cart.forEach(({ id, title, cost, count }) => {
     const itemCart = `	<div class="food-row">
 					<span class="food-name">${title}</span>
