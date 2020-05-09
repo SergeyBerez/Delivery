@@ -61,8 +61,7 @@
                 Online service <br />home delivery service
               </h1>
               <p class="promo-text">
-                The courier in gloves, a mask and with
-                antiseptic
+                The courier in gloves, a mask and with antiseptic
               </p>
             </section>
             <section class="swiper-slide promo kebab">
@@ -178,20 +177,37 @@
 						<button class="counter-button">+</button>
 					</div>
 				</div> -->
-
           <!-- /.foods-row -->
         </div>
         <!-- /.modal-body -->
         <div class="modal-footer">
           <span class="modal-pricetag">1250 ₽</span>
           <div class="footer-buttons">
-            <button class="button button-primary">Order</button>
+            <button class="button button-primary button-order">Order</button>
             <button class="button clear-cart">Cancel</button>
           </div>
         </div>
         <!-- /.modal-footer -->
       </div>
+
       <!-- /.modal-dialog -->
+    </div>
+    <div class="modal modal-order">
+      <div class="modal-dialog modal-dialog-auth">
+        <button class="close-order">&times;</button>
+        <form action="" class="form-order">
+          <label for="name">Name</label>
+
+          <input type="text" id="name" placeholder="name" />
+          <label for="email">email</label>
+
+          <input type="email" id="email" placeholder="email" />
+
+          <button class="button button-primary button-login" type="submit">
+            send
+          </button>
+        </form>
+      </div>
     </div>
 
     <div class="modal-auth">
@@ -218,10 +234,12 @@
             </div>
           </div>
         </form>
+
         <!-- /.modal-footer -->
       </div>
       <!-- /.modal-dialog -->
     </div>
+
     <script src="https://unpkg.com/swiper/js/swiper.min.js"></script>
     <script src="js/main.js"></script>
   </body>

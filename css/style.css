@@ -573,6 +573,22 @@ button {
   line-height: 23px;
 }
 
+.form-order {
+  display: block;
+}
+label {
+  display: block;
+  color: grey;
+  font-size: 20px;
+}
+.close-order {
+  font-size: 36px;
+  border: none;
+  background-color: transparent;
+  position: absolute;
+  top: 10px;
+  right: 20px;
+}
 @media (max-width: 1366px) {
   .container {
     max-width: 960px;
@@ -774,7 +790,6 @@ button {
 
 @media (max-width: 480px) {
   .header-nav a {
-    
     margin-left: 10px;
   }
   .button-text {

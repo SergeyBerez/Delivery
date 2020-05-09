@@ -19,15 +19,19 @@ const restaurants = document.querySelector(".restaurants");
 const menu = document.querySelector(".menu");
 const logo = document.querySelector(".logo");
 const cardsMenu = document.querySelector(".cards-menu");
-//------section heading title hide menu
+//------ elements section heading title hide menu
 const restaurantTitle = document.querySelector(".restaurant-title");
 const rating = document.querySelector(".rating");
 const priceHead = document.querySelector(".price");
 const category = document.querySelector(".category");
-//-----
+//-----elements cart
 const modalBody = document.querySelector(".modal-body");
 const modalPriceTotal = document.querySelector(".modal-pricetag");
 const buttonClearCart = document.querySelector(".clear-cart");
+//------elements for order
+const btnOrder = document.querySelector(".button-order");
+const modalOrder = document.querySelector(".modal-order");
+const closeOrder = document.querySelector(".close-order");
 
 let LOGIN = localStorage.getItem("gloDelivery");
 
@@ -60,7 +64,9 @@ const getData = async function (url) {
 function toggleModal() {
   modal.classList.toggle("is-open");
 }
-
+function toogleModalOrder() {
+  modalOrder.classList.toggle("is-open");
+}
 function toogleModalAuth() {
   modalAuth.classList.toggle("is-open");
   labelAuthSpan.style.color = "";
@@ -326,7 +332,8 @@ function init() {
     renderCart();
     toggleModal();
   });
-
+  btnOrder.addEventListener("click", toogleModalOrder);
+  closeOrder.addEventListener("click", toogleModalOrder);
   buttonClearCart.addEventListener("click", function (e) {
     cart.length = 0;
     saveCarToLocal();
