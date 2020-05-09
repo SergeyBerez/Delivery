@@ -227,7 +227,6 @@ function openGoods(e) {
     if (restaurant) {
       let [name, stars, price, kitchen] = restaurant.dataset.info.split(",");
       restaurantTitle.textContent = name;
-
       rating.textContent = stars;
       priceHead.textContent = price;
       category.textContent = kitchen;
