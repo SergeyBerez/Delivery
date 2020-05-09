@@ -31,7 +31,22 @@ const buttonClearCart = document.querySelector(".clear-cart");
 
 let LOGIN = localStorage.getItem("gloDelivery");
 
-const cart = JSON.parse(localStorage.getItem("cart")) || [];
+const cart = [];
+function getCartToLocal() {
+  if (localStorage.getItem(LOGIN)) {
+    JSON.parse(localStorage.getItem(LOGIN)).forEach((item) => {
+      cart.push(item);
+    });
+    // cart.push(...JSON.parse(localStorage.getItem(LOGIN)));
+  }
+}
+
+function saveCartToLocal() {
+  if (LOGIN) {
+    localStorage.setItem(LOGIN, JSON.stringify(cart));
+  }
+}
+
 const getData = async function (url) {
   const response = await fetch(url);
 
@@ -63,6 +78,7 @@ function authorized() {
   //function for exit from autirization page
   function logOut() {
     LOGIN = null;
+    cart.length = 0;
     localStorage.removeItem("gloDelivery");
     buttonAuth.style.display = "";
     userName.style.display = "";
@@ -80,6 +96,7 @@ function authorized() {
   buttonOut.style.display = "flex";
   cartButton.style.display = "flex";
   buttonOut.addEventListener("click", logOut);
+  getCartToLocal();
 }
 
 //====my function formValidate ======
@@ -112,7 +129,9 @@ function notAuthorized() {
       labelAuthSpan.textContent = "enter login";
     } else {
       LOGIN = loginInput.value;
+
       localStorage.setItem("gloDelivery", LOGIN);
+
       toogleModalAuth();
       buttonAuth.removeEventListener("click", toogleModalAuth);
       closeAuth.removeEventListener("click", toogleModalAuth);
@@ -244,7 +263,7 @@ function addToCart(e) {
       food.count++;
     } else {
       cart.push({ id, title, cost, count: 1 });
-      localStorage.setItem("cart", JSON.stringify(cart));
+      saveCartToLocal();
     }
   }
 }
@@ -293,7 +312,7 @@ function changeCount(e) {
 
       food.count++;
     }
-    localStorage.setItem("cart", JSON.stringify(cart));
+    saveCartToLocal();
     renderCart();
   }
 }
@@ -311,7 +330,7 @@ function init() {
 
   buttonClearCart.addEventListener("click", function (e) {
     cart.length = 0;
-    localStorage.setItem("cart", JSON.stringify(cart));
+    saveCarToLocal();
     renderCart();
   });
 
