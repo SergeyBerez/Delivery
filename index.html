@@ -160,10 +160,10 @@
         <div class="footer-block">
           <img src="img/icon/logo.svg" alt="logo" class="logo footer-logo" />
           <nav class="footer-nav">
-            <a href="#" class="footer-link">Restaurants</a>
-            <a href="#" class="footer-link">Couriers</a>
-            <a href="#" class="footer-link">Press &nbsp;center</a>
-            <a href="#" class="footer-link">Contact</a>
+            <a href="#" class="footer-link animated">Restaurants</a>
+            <a href="#" class="footer-link animated">Couriers</a>
+            <a href="#" class="footer-link animated">Press &nbsp;center</a>
+            <a href="#" class="footer-link animated">Contact</a>
           </nav>
           <div class="social-links">
             <a href="#" class="social-link"
@@ -183,7 +183,7 @@
     </footer>
 
     <div class="modal modal-cart">
-      <div class="modal-dialog">
+      <div class="modal-dialog animated">
         <div class="modal-header">
           <h3 class="modal-title">Cart</h3>
           <button class="close">&times;</button>
@@ -214,20 +214,33 @@
 
       <!-- /.modal-dialog -->
     </div>
-    <div class="modal modal-order">
-      <div class="modal-dialog modal-dialog-auth">
+    <!--   -------------modal-order  when we clicked on button order-->
+    <div class="modal-order">
+      <div class="modal-dialog modal-dialog-auth animated">
         <button class="close-order">&times;</button>
         <form action="" class="form-order">
-          <label for="name">Name</label>
+          <fieldset class="modal-body">
+            <legend class="modal-title">send order</legend>
+            <label class="label-auth" for="name"
+              >Name
+              <input class="input" type="text" id="name" />
+            </label>
 
-          <input type="text" id="name" placeholder="name" />
-          <label for="email">email</label>
+            <label class="label-auth" for="email"
+              >email <input class="input" type="email" id="email" " /></label
+            >
+          </fieldset>
+          <div class="modal-footer">
+            <div class="footer-buttons">
+              <button class="button button-primary button-login" type="submit">
+                Log&nbsp;in
+              </button>
+            </div>
+          </div>
 
-          <input type="email" id="email" placeholder="email" />
-
-          <button class="button button-primary button-login" type="submit">
+          <!-- <button class="button button-primary button-login" type="submit">
             send
-          </button>
+          </button> -->
         </form>
       </div>
     </div>

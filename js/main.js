@@ -9,7 +9,7 @@ const close = document.querySelector(".close");
 const buttonAuth = document.querySelector(".button-auth");
 const modalAuth = document.querySelector(".modal-auth");
 const closeAuth = document.querySelector(".close-auth");
-const loginForm = document.querySelector("#logInForm");
+
 const loginInput = document.querySelector("#login");
 const userName = document.querySelector(".user-name");
 const buttonOut = document.querySelector(".button-out");
@@ -18,7 +18,7 @@ const cardsRestaurants = document.querySelector(".cards-restaurants");
 const containerPromo = document.querySelector(".container-promo");
 const restaurants = document.querySelector(".restaurants");
 const menu = document.querySelector(".menu");
-const logo = document.querySelector(".logo");
+
 const cardsMenu = document.querySelector(".cards-menu");
 //------ elements section heading title hide menu
 const restaurantTitle = document.querySelector(".restaurant-title");
@@ -36,9 +36,13 @@ const closeOrder = document.querySelector(".close-order");
 // find
 const inputSearch = document.querySelector(".input-search");
 const restoutransLink = document.querySelector("[href='#Restaurants']");
+//elemnts for animation
+const logo = document.querySelector(".logo");
 const links = document.querySelectorAll(".footer-link");
 const headerNav = document.querySelector(".header-nav");
-
+// our forms   auth and seng order
+const loginForm = document.querySelector("#logInForm");
+const formOrder = document.querySelector(".form-order");
 let LOGIN = localStorage.getItem("gloDelivery");
 
 const cart = [];
@@ -68,11 +72,35 @@ const getData = async function (url) {
 };
 
 function toggleModal() {
-  modal.classList.toggle("is-open");
+  modal.classList.add("is-open");
+  modal.firstElementChild.classList.add("fadeInDown");
+  modal.firstElementChild.classList.remove("fadeOutUp");
+}
+function toggleModalClose() {
+  modal.firstElementChild.classList.remove("fadeInDown");
+  modal.firstElementChild.classList.add("fadeOutUp");
+  setTimeout(function () {
+    modal.classList.remove("is-open");
+  }, 1000);
+
+  // modal.firstElementChild.classList.toggle("fadeOutDown");
 }
 
 function toogleModalOrder() {
-  modalOrder.classList.toggle("is-open");
+  modalOrder.classList.add("is-open");
+
+  modalOrder.firstElementChild.classList.add("fadeInDown");
+  modalOrder.firstElementChild.classList.remove("fadeOutUp");
+}
+
+function toogleModalOrderClose() {
+  setTimeout(function () {
+    modalOrder.classList.remove("is-open");
+  }, 1000);
+  modalOrder.firstElementChild.classList.remove("fadeInDown");
+  modalOrder.firstElementChild.classList.add("fadeOutUp");
+
+  // body
 }
 function toogleModalAuth() {
   modalAuth.classList.toggle("is-open");
@@ -411,7 +439,7 @@ function init() {
     toggleModal();
   });
   btnOrder.addEventListener("click", toogleModalOrder);
-  closeOrder.addEventListener("click", toogleModalOrder);
+  closeOrder.addEventListener("click", toogleModalOrderClose);
   buttonClearCart.addEventListener("click", function (e) {
     cart.length = 0;
     saveCarToLocal();
@@ -421,7 +449,7 @@ function init() {
 
   modalBody.addEventListener("click", changeCount);
 
-  close.addEventListener("click", toggleModal);
+  close.addEventListener("click", toggleModalClose);
 
   cardsMenu.addEventListener("click", addToCart);
 
@@ -452,29 +480,13 @@ function init() {
     }
   });
 
-  // $(links).hover(
-  //   function () {
-  //     console.log($(this));
-  //     $(this).addClass("bounce");
-  //   },
-  //   function () {
-  //     console.log($(this));
-  //     $(this).removeClass("bounce");
-  //   }
-  // );
-
+  // animation for menu
   headerNav.addEventListener("mouseout", function (e) {
     console.log(e.type);
     if (e.target.tagName == "A") {
       e.target.classList.remove("bounce");
     }
   });
-
-  // for (const a of links) {
-  //   a.onmouseenter = function (e) {
-  //     e.target.classList.add("bounceIn");
-  //   };
-  // }
 }
 
 init();
