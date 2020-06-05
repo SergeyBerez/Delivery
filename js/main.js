@@ -442,7 +442,7 @@ function init() {
   closeOrder.addEventListener("click", toogleModalOrderClose);
   buttonClearCart.addEventListener("click", function (e) {
     cart.length = 0;
-    saveCarToLocal();
+    // saveCarToLocal();
     renderCart();
   });
   inputSearch.addEventListener("keydown", findElement);
