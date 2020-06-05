@@ -1,5 +1,6 @@
 "use street";
 
+//document.addEventListener("DOMContentLoaded", function (e) {
 const cartButton = document.querySelector("#cart-button");
 const modal = document.querySelector(".modal");
 const close = document.querySelector(".close");
@@ -32,6 +33,11 @@ const buttonClearCart = document.querySelector(".clear-cart");
 const btnOrder = document.querySelector(".button-order");
 const modalOrder = document.querySelector(".modal-order");
 const closeOrder = document.querySelector(".close-order");
+// find
+const inputSearch = document.querySelector(".input-search");
+const restoutransLink = document.querySelector("[href='#Restaurants']");
+const links = document.querySelectorAll(".footer-link");
+const headerNav = document.querySelector(".header-nav");
 
 let LOGIN = localStorage.getItem("gloDelivery");
 
@@ -64,11 +70,15 @@ const getData = async function (url) {
 function toggleModal() {
   modal.classList.toggle("is-open");
 }
+
 function toogleModalOrder() {
   modalOrder.classList.toggle("is-open");
 }
 function toogleModalAuth() {
   modalAuth.classList.toggle("is-open");
+  modalAuth.firstElementChild.classList.toggle("fadeInDown");
+
+  // modalAuth.firstElementChild.classList.toggle(`wow fadeInUp`);
   labelAuthSpan.style.color = "";
   labelAuthSpan.textContent = "login";
 }
@@ -173,7 +183,7 @@ function createCardRestaurant(restaurant) {
   } = restaurant;
 
   const card = `
-  	<a class="card card-restaurant" data-info="${[
+  	<a class="card wow fadeInUp card-restaurant" data-wow-delay="0.9s"  data-info="${[
       name,
       stars,
       price,
@@ -267,7 +277,12 @@ function addToCart(e) {
     if (food) {
       food.count++;
     } else {
-      cart.push({ id, title, cost, count: 1 });
+      cart.push({
+        id,
+        title,
+        cost,
+        count: 1,
+      });
       saveCartToLocal();
     }
   }
@@ -322,11 +337,74 @@ function changeCount(e) {
   }
 }
 
+function findElement(e) {
+  let code = e.keyCode;
+  let value = e.target.value.trim();
+  let regexp = new RegExp(`${value}`, "i");
+
+  let goods = [];
+  if (code === 13) {
+    getData("./db/partners.json").then(function (restoutrans) {
+      let restaurant = restoutrans.map((item) => {
+        return item.products;
+      });
+
+      restaurant.forEach((item) => {
+        getData(`./db/${item}`).then(function (data) {
+          goods.push(...data);
+          const searchGoods = goods.filter((item) => {
+            return item.name.search(regexp) !== -1;
+          });
+          restaurantTitle.textContent = "";
+          rating.textContent = "";
+          priceHead.textContent = "";
+          category.textContent = "";
+
+          containerPromo.classList.add("hide");
+          restaurants.classList.add("hide");
+          menu.classList.remove("hide");
+          cardsMenu.textContent = "";
+          // return searchGoods;
+
+          if (searchGoods.length !== 0) {
+            searchGoods.forEach((item) => {
+              // console.log("----render---");
+              createCartGood(item);
+            });
+          } else {
+            restaurantTitle.textContent = "такого товара нет";
+          }
+        });
+        // .then((data) => {
+        //  data.forEach((card) => {
+        //    createCartGood(card);
+        //  });
+        // });
+      });
+    });
+  }
+}
+
 // ======function init() / render all page / send ajax request/ initial slider /========
 function init() {
-  getData("./db/partners.json").then(function (data) {
-    data.forEach(createCardRestaurant);
-  });
+  getData("./db/partners.json")
+    .then((data) => {
+      return data;
+
+      // src.addEventListener("load", function (e) {
+      //   src.src = "js/wow.min.js";
+      //   console.log(11111);
+      //   document.body.append(src);
+      // });
+    })
+    .then(function (data) {
+      data.forEach(createCardRestaurant);
+      let count = 0.1;
+      [...document.querySelectorAll(".card")].forEach((item) => {
+        item.dataset.wowDelay = count + "s";
+        count += 0.2;
+      });
+    });
 
   cartButton.addEventListener("click", function () {
     renderCart();
@@ -339,6 +417,7 @@ function init() {
     saveCarToLocal();
     renderCart();
   });
+  inputSearch.addEventListener("keydown", findElement);
 
   modalBody.addEventListener("click", changeCount);
 
@@ -353,14 +432,64 @@ function init() {
     restaurants.classList.remove("hide");
     menu.classList.add("hide");
   });
-
-  let mySwiper = new Swiper(".swiper-container", {
-    speed: 400,
-    spaceBetween: 100,
-    loop: true,
-    autoplay: {
-      delay: 2000,
-    },
+  restoutransLink.addEventListener("click", function (e) {
+    containerPromo.classList.remove("hide");
+    restaurants.classList.remove("hide");
+    menu.classList.add("hide");
   });
+
+  logo.addEventListener("mouseenter", function (e) {
+    logo.firstElementChild.classList.add("bounce");
+  });
+  logo.addEventListener("mouseleave", function (e) {
+    logo.firstElementChild.classList.remove("bounce");
+  });
+
+  headerNav.addEventListener("mouseover", function (e) {
+    console.log(e.type);
+    if (e.target.tagName == "A") {
+      e.target.classList.add("bounce");
+    }
+  });
+
+  // $(links).hover(
+  //   function () {
+  //     console.log($(this));
+  //     $(this).addClass("bounce");
+  //   },
+  //   function () {
+  //     console.log($(this));
+  //     $(this).removeClass("bounce");
+  //   }
+  // );
+
+  headerNav.addEventListener("mouseout", function (e) {
+    console.log(e.type);
+    if (e.target.tagName == "A") {
+      e.target.classList.remove("bounce");
+    }
+  });
+
+  // for (const a of links) {
+  //   a.onmouseenter = function (e) {
+  //     e.target.classList.add("bounceIn");
+  //   };
+  // }
 }
+
 init();
+new WOW().init();
+//=============mySwipe===========================
+let mySwiper = new Swiper(".swiper-container", {
+  speed: 400,
+  spaceBetween: 100,
+  loop: true,
+  autoplay: {
+    delay: 2000,
+  },
+});
+
+// console.log("ppploadage load".search(/load/i));
+// console.log("ppploadage ".includes('load'));
+// console.log(/load/gi.exec("ppploadage load"));
+//});

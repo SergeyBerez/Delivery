@@ -13,6 +13,9 @@ button {
   color: inherit;
 }
 
+.delay {
+  -animation-delay: 2s;
+}
 .hide {
   display: none;
 }

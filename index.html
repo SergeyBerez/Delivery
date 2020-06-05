@@ -3,12 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Delivery Food — доставка еды на дом</title>
+    <title>Delivery Food</title>
     <link
       href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap&subset=cyrillic"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="css/normalize.css" />
+    <link rel="stylesheet" href="css/animate.css" />
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.min.css" />
   </head>
@@ -16,24 +17,24 @@
   <body>
     <div class="container">
       <header class="header">
-        <a class="logo">
-          <img src="img/icon/logo.svg" alt="Logo" />
+        <a class="logo animated bounceInDown">
+          <img src="img/icon/logo.svg" class="animated" alt="Logo" />
         </a>
-        <nav class="header-nav">
-          <a href="#" class="footer-link">Restaurants</a>
-          <a href="#" class="footer-link">Couriers</a>
-          <a href="#" class="footer-link">Press &nbsp;center</a>
-          <a href="#" class="footer-link">Contact</a>
+        <nav class="header-nav animated fadeInRight delay-1s">
+          <a href="#Restaurants" class="footer-link animated">Restaurants</a>
+          <a href="#" class="footer-link animated">Couriers</a>
+          <a href="#" class="footer-link animated">Press &nbsp;center</a>
+          <a href="#" class="footer-link animated">Contact</a>
         </nav>
 
-        <label class="address">
+        <label class="address animated fadeInLeft delay-1s">
           <input
             type="text"
             class="input input-address"
             placeholder="Delivery address"
           />
         </label>
-        <div class="buttons">
+        <div class="buttons animated fadeInRight delay-1s">
           <span class="user-name"></span>
           <button class="button button-primary button-auth">
             <span class="button-auth-svg"></span>
@@ -108,6 +109,27 @@
             </label>
           </div>
           <div class="cards cards-restaurants">
+            <!-- <div class="card wow fadeInUp" data-wow-delay="0.4s">
+              <img
+                class="card-img"
+                src="img/Pasta-Pizza-Fasad.jpg"
+                alt="image"
+              />
+              <div class="card-text">
+                <div class="card-heading">
+                  <h3 class="card-title">Pizza&Pasta</h3>
+                  <span class="card-tag">50 min</span>
+                </div>
+                <div class="card-info">
+                  <div class="rating">
+                    <img src="img/rating.png" alt="" />
+                    7.5
+                  </div>
+                  <div class="price">10 $</div>
+                  <div class="category">pizza</div>
+                </div>
+              </div>
+            </div> -->
             <!-- /.card -->
           </div>
           <!-- /.cards -->
@@ -211,7 +233,7 @@
     </div>
 
     <div class="modal-auth">
-      <div class="modal-dialog modal-dialog-auth">
+      <div class="modal-dialog modal-dialog-auth animated">
         <button class="close-auth">&times;</button>
         <form id="logInForm">
           <fieldset class="modal-body">
@@ -241,6 +263,9 @@
     </div>
 
     <script src="https://unpkg.com/swiper/js/swiper.min.js"></script>
+    <script src="js/wow.min.js"></script>
     <script src="js/main.js"></script>
+
+    <script src="js.js"></script>
   </body>
 </html>
