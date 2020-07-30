@@ -120,7 +120,7 @@ button {
 .button-primary .button-auth-svg {
   width: 24px;
   height: 24px;
-  background-color: #fff;
+  background-color: rgb(238, 18, 18);
   -webkit-mask: url("../img/icon/user.svg") no-repeat 50% 50%;
   mask: url("../img/icon/user.svg") no-repeat 50% 50%;
   background-repeat: no-repeat;
@@ -139,9 +139,9 @@ button {
   background-repeat: no-repeat;
 }
 
-.button-primary .button-cart-svg {
+/* .button-primary .button-cart-svg {
   background-color: #fff;
-}
+} */
 
 .button:hover .button-cart-svg {
   background-color: #fff;
@@ -181,17 +181,17 @@ button {
 }
 
 .pizza {
-  background: #fff1b8 url(../img/promo/pizza.png) no-repeat top -100px right -250px /
+  background: #fff1b8 url(./../img/promo/pizza.png) no-repeat top -100px right -250px /
     830px;
 }
 
 .kebab {
-  background: #d6e4ff url(../img/promo/kebab.png) no-repeat top 45px right 40px /
+  background: #d6e4ff url(./../img/promo/kebab.png) no-repeat top 45px right 40px /
     450px;
 }
 
 .vegetables {
-  background: #fff566 url(../img/promo/vegetables.png) no-repeat top 0 right 0 /
+  background: #fff566 url(./../img/promo/vegetables.png) no-repeat top 0 right 0 /
     825px;
 }
 

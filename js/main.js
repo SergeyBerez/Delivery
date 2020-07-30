@@ -48,6 +48,7 @@ let LOGIN = localStorage.getItem("gloDelivery");
 const cart = [];
 function getCartToLocal() {
   if (localStorage.getItem(LOGIN)) {
+    console.log(localStorage.getItem(LOGIN));
     JSON.parse(localStorage.getItem(LOGIN)).forEach((item) => {
       cart.push(item);
     });
@@ -191,6 +192,7 @@ function notAuthorized() {
 }
 //=========end fn function notAuthorized
 function checkAuth() {
+  console.log('checkauth');
   if (LOGIN) {
     authorized();
   } else {
@@ -290,6 +292,7 @@ function openGoods(e) {
 }
 // =========function work with cart and goods ===
 function addToCart(e) {
+  console.log(1112);
   const target = e.target;
   const buttonAddtoCart = target.closest(".button-add-cart");
 
@@ -472,17 +475,14 @@ function init() {
   logo.addEventListener("mouseleave", function (e) {
     logo.firstElementChild.classList.remove("bounce");
   });
-
+  // animation for menu
   headerNav.addEventListener("mouseover", function (e) {
-    console.log(e.type);
     if (e.target.tagName == "A") {
       e.target.classList.add("bounce");
     }
   });
 
-  // animation for menu
   headerNav.addEventListener("mouseout", function (e) {
-    console.log(e.type);
     if (e.target.tagName == "A") {
       e.target.classList.remove("bounce");
     }
@@ -497,7 +497,7 @@ let mySwiper = new Swiper(".swiper-container", {
   spaceBetween: 100,
   loop: true,
   autoplay: {
-    delay: 2000,
+    delay: 2000, 
   },
 });
 
